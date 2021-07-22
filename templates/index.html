@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %} ToDO WebApp {% endblock title %} 
+
+{%block body %}
+<div class="container my-3">
+    <h2>Add a ToDo</h2>
+    <form action="/" method="POST">
+        <div class="mb-3">
+            <label for="title" class="form-label">ToDo Title</label>
+            <input type="text" class="form-control" id="title" 
+            name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Submit</button>
+    </form>
+</div>
+
+<div class="container my-2">
+    <h2>Your ToDos</h2>
+    {% if allToDo|length == 0%}
+    <div class="alert alert-info" role="alert">
+        No ToDos Added! Add a new ToDo..
+      </div>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <!-- <th scope="col">Date/Time</th> -->
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for todo in allToDo %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{todo.title}}</td>
+                        <td>{{todo.description}}</td>
+                        <!-- <td>{{todo.stamp}}</td> -->
+                        <td>
+                            <a href="/update/{{todo.sno}}" type="button" class="btn btn-outline-success">Update</button> </a>
+                            <a href="/delete/{{todo.sno}}" type="button" class="btn btn-outline-danger">Delete</button> </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      {% endif %}
+</div>
+{% endblock body %}
